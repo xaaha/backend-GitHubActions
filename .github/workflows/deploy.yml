@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Print Pull Request Number
         run: |
-          echo "Pull Request Number: ${{ github.event.inputs.prNumber }}"
+          echo "Pull Request Number: ${{ github.event.client_payload.prNumber }}"
         id: process
 
   use_pull_request_number:
@@ -29,4 +29,4 @@ jobs:
       - name: Use Pull Request Number
         run: |
           echo "Pull Request Number: ${{ needs.process_input.outputs.prNumber }}"
-          echo "Base URL: www.example.com/pr-${{ needs.process_input}}"
+          echo "Base URL: www.example.com/pr-${{ github.event.client_payload.prNumber}}"
