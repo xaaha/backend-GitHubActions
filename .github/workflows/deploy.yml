@@ -10,3 +10,21 @@ jobs:
         run: |
           echo "E2E Tests Complete"
           sleep 10s
+
+  process_input:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Pull Request Number
+        run: |
+          echo "Pull Request Number: ${{ github.event.client_payload.prNumber }}"
+        id: process
+
+  use_pull_request_number:
+    needs: process_input
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Pull Request Number
+        run: |
+          echo "Pull Request Number: ${{ needs.process_input.outputs.prNumber }}"
+          echo "Base URL: www.example.com/pr-${{ needs.process_input.outputs.prNumber }}"
+          # Perform other actions using the base URL
