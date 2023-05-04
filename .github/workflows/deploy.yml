@@ -31,3 +31,4 @@ jobs:
       - name: Use Pull Request Number
         run: |
           echo "Pull Request Number: ${{ needs.process_input.outputs.prNumber }}"
+          echo "Base URL: www.example.com/pr-${{ needs.process_input}}"
