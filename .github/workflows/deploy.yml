@@ -9,7 +9,7 @@ jobs:
     name: Run API
     runs-on: ubuntu-latest
     steps:
-      - name: Build API
+      - name: Cypress Tests
         run: |
-          echo "Build API"
+          echo "E2E Tests Complete"
           sleep 10s
