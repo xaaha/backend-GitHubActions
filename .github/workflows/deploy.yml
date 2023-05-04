@@ -1,6 +1,11 @@
 name: Deploy
 on:
   workflow_dispatch:
+    inputs:
+      prNumber:
+        description: 'Pull Request Number'
+        required: true
+
 jobs:
   build:
     name: Run API
@@ -16,7 +21,7 @@ jobs:
     steps:
       - name: Print Pull Request Number
         run: |
-          echo "Pull Request Number: ${{ github.event.client_payload.prNumber }}"
+          echo "Pull Request Number: ${{ github.event.inputs.prNumber }}"
         id: process
 
   use_pull_request_number:
@@ -26,5 +31,3 @@ jobs:
       - name: Use Pull Request Number
         run: |
           echo "Pull Request Number: ${{ needs.process_input.outputs.prNumber }}"
-          echo "Base URL: www.example.com/pr-${{ needs.process_input.outputs.prNumber }}"
-          # Perform other actions using the base URL
