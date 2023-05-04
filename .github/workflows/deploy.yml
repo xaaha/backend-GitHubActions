@@ -1,10 +1,8 @@
 name: Deploy
 on:
   workflow_dispatch:
-    inputs:
-      prNumber:
-        description: 'Pull Request Number'
-        required: true
+  repository_dispatch:
+    types: [pr-input]
 
 jobs:
   build:
