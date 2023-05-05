@@ -1,0 +1,14 @@
+name: Receive Pull Request Number
+
+on:
+  repository_dispatch:
+    types: [pr-input]
+
+jobs:
+  use_pull_request_number:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Pull Request Number
+        run: |
+          echo "Pull Request Number: ${{ github.event.client_payload.pullRequestNumber }}"
+          # Perform other actions using the pull request number
