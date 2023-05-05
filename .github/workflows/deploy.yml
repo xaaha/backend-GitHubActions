@@ -9,7 +9,7 @@ jobs:
       prNumber: ${{ steps.get_pr_number.outputs.prNumber }}
     steps:
       - name: Download PR Number artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: prNumber
       - name: Set PR Number as output
