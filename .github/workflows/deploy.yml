@@ -11,7 +11,7 @@ jobs:
       - name: Download PR Number artifact
         uses: actions/download-artifact@v2
         with:
-          name: pr_number
+          name: prNumber
       - name: Set PR Number as output
         id: get_pr_number
         run: |
