@@ -1,34 +1,38 @@
-name: Deploy
+name: Use Pr Number
 on:
   workflow_dispatch:
-    inputs:
-      prNumber:
-        description: 'Pull Request Number'
-        required: true
 
 jobs:
-  build:
-    name: Run API
+  download_pr_number:
     runs-on: ubuntu-latest
+    outputs:
+      prNumber: ${{ steps.get_pr_number.outputs.prNumber }}
     steps:
-      - name: Cypress Tests
+      - name: Download PR Number artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: pr_number
+      - name: Set PR Number as output
+        id: get_pr_number
         run: |
-          echo "E2E Tests Complete"
-          sleep 10s
+          prNumber=$(cat prNumber.txt)
+          echo "::set-output name=prNumber::$prNumber"
 
-  process_input:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print Pull Request Number
-        run: |
-          echo "Pull Request Number: ${{ github.event.inputs.prNumber }}"
-        id: process
+  # build:
+  #   name: Run API
+  #   needs: download_pr_number
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Cypress Tests
+  #       run: |
+  #         echo "E2E Tests Complete"
+  #         sleep 5s
 
-  use_pull_request_number:
-    needs: process_input
+  print_pull_request_number:
+    needs: download_pr_number
     runs-on: ubuntu-latest
     steps:
       - name: Use Pull Request Number
         run: |
-          echo "Pull Request Number: ${{ needs.process_input.outputs.prNumber }}"
-          echo "Base URL: www.example.com/pr-${{ github.event.inputs.prNumber }}"
+          echo "Pull Request Number: ${{ needs.download_pr_number.outputs.prNumber }}"
+          echo "Base URL: www.example.com/pr-${{ needs.download_pr_number.outputs.prNumber }}"
