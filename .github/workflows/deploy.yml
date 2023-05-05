@@ -1,38 +1,60 @@
-name: Use Pr Number
+# name: Use Pr Number
+# on:
+#   workflow_dispatch:
+
+# jobs:
+#   download_pr_number:
+#     runs-on: ubuntu-latest
+#     outputs:
+#       prNumber: ${{ steps.get_pr_number.outputs.prNumber }}
+#     steps:
+#       - name: Download PR Number artifact
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: prNumber
+#       - name: Set PR Number as output
+#         id: get_pr_number
+#         run: |
+#           prNumber=$(cat prNumber.txt)
+#           echo "::set-output name=prNumber::$prNumber"
+
+#   # build:
+#   #   name: Run API
+#   #   needs: download_pr_number
+#   #   runs-on: ubuntu-latest
+#   #   steps:
+#   #     - name: Cypress Tests
+#   #       run: |
+#   #         echo "E2E Tests Complete"
+#   #         sleep 5s
+
+#   print_pull_request_number:
+#     needs: download_pr_number
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Use Pull Request Number
+#         run: |
+#           echo "Pull Request Number: ${{ needs.download_pr_number.outputs.prNumber }}"
+#           echo "Base URL: www.example.com/pr-${{ needs.download_pr_number.outputs.prNumber }}"
+
+name: Receive Pull Request Number
+
 on:
   workflow_dispatch:
+    inputs:
+      prNumber:
+        description: 'Pull Request Number from Applications-Frontend'
+        required: true
+  repository_dispatch:
+    types: [pr-input]
 
 jobs:
-  download_pr_number:
-    runs-on: ubuntu-latest
-    outputs:
-      prNumber: ${{ steps.get_pr_number.outputs.prNumber }}
-    steps:
-      - name: Download PR Number artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: prNumber
-      - name: Set PR Number as output
-        id: get_pr_number
-        run: |
-          prNumber=$(cat prNumber.txt)
-          echo "::set-output name=prNumber::$prNumber"
-
-  # build:
-  #   name: Run API
-  #   needs: download_pr_number
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Cypress Tests
-  #       run: |
-  #         echo "E2E Tests Complete"
-  #         sleep 5s
-
-  print_pull_request_number:
-    needs: download_pr_number
+  use_pull_request_number:
     runs-on: ubuntu-latest
     steps:
       - name: Use Pull Request Number
         run: |
-          echo "Pull Request Number: ${{ needs.download_pr_number.outputs.prNumber }}"
-          echo "Base URL: www.example.com/pr-${{ needs.download_pr_number.outputs.prNumber }}"
+          echo "Pull Request Number: ${{ github.event.client_payload.prNumber }}"
+          echo "Client Payload: ${{ github.event.client_payload }}"
+          echo "PR NUMBER with Input: ${{github.event.inputs.prNumber}}"
+          # Perform other actions using the pull request number
