@@ -8,15 +8,26 @@ jobs:
   build:
     name: Run API
     runs-on: ubuntu-latest
+    if: github.event_name == 'repository_dispatch' && github.event.action == 'pr-input'
     steps:
       - name: Cypress Tests
         run: |
           echo "E2E Tests Complete"
-          sleep 5s
+          sleep 10s
+
+  # process_input:
+  #   runs-on: ubuntu-latest
+  #   if: github.event_name == 'repository_dispatch' && github.event.action == 'pr-input'
+  #   steps:
+  #     - name: Print Pull Request Number
+  #       run: |
+  #         echo "Pull Request Number: ${{ github.event.client_payload.prNumber }}"
+  #       id: process
 
   use_pull_request_number:
     needs: process_input
     runs-on: ubuntu-latest
+    if: github.event_name == 'repository_dispatch' && github.event.action == 'pr-input'
     steps:
       - name: Use Pull Request Number
         run: |
