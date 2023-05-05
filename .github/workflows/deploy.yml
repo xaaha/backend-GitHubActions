@@ -12,15 +12,7 @@ jobs:
       - name: Cypress Tests
         run: |
           echo "E2E Tests Complete"
-          sleep 10s
-
-  process_input:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print Pull Request Number
-        run: |
-          echo "Pull Request Number: ${{ github.event.client_payload.prNumber }}"
-        id: process
+          sleep 5s
 
   use_pull_request_number:
     needs: process_input
@@ -28,5 +20,5 @@ jobs:
     steps:
       - name: Use Pull Request Number
         run: |
-          echo "Pull Request Number: ${{ needs.process_input.outputs.prNumber }}"
+          echo "Pull Request Number: ${{ github.event.client_payload.prNumber }}"
           echo "Base URL: www.example.com/pr-${{ github.event.client_payload.prNumber }}"
