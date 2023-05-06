@@ -52,5 +52,5 @@ jobs:
     steps:
       - name: Use Pull Request Number
         run: |
-          echo "Pull Request Number: ${{ github.event.input.prNumber }}"
+          echo "Pull Request Number: ${{ github.event.client_payload.prNumber }}"
           # Perform other actions using the pull request number
