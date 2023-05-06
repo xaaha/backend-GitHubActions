@@ -41,10 +41,10 @@ name: Receive Pull Request Number
 
 on:
   workflow_dispatch:
-    inputs:
-      prNumber:
-        description: 'Pull Request Number from Frontend'
-        required: true
+    # inputs:
+    #   prNumber:
+    #     description: 'Pull Request Number from Frontend'
+    #     required: false
 
 jobs:
   use_pull_request_number:
