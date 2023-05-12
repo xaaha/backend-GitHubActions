@@ -20,4 +20,4 @@ jobs:
         run: echo "::set-output name=value::${{ env.contact }}"
 
       - name: Use Output
-        run: echo "The output value is ${{ steps.contact.outputs.contact }}"
+        run: echo "The output value is ${{ needs.validate.outputs.contact }}"
