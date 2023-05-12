@@ -22,6 +22,7 @@ jobs:
       - name: Use Output
         run: echo "The output value is ${{ steps.contact.outputs.value }}"
   use-contact:
+    needs: [Validate]
     runs-on: ubuntu-latest
     steps:
       - name: use-contact-value
