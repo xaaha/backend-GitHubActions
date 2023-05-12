@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Set Output
         id: contact
-        run: echo "::set-output name=value::${{ env.contact }}"
+        run: echo "value=${{ env.contact }}" >> $GITHUB_OUTPUT
 
       - name: Use Output
         run: echo "The output value is ${{ steps.contact.outputs.value }}"
@@ -28,3 +28,8 @@ jobs:
       - name: use-contact-value
         run: |
           echo "This is the contact Value: ${{ needs.Validate.outputs.contact }}"
+
+# old way:
+# run: echo "::set-output name=value::${{ env.contact }}"
+# new way:
+# run: echo "value="
