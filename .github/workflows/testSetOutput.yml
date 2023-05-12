@@ -1,0 +1,23 @@
+name: Sample Workflow
+on:
+  workflow_dispatch:
+
+env:
+  contact: 'Pratik Thapa'
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    container:
+      image: node:14
+    if: github.repository.archived !=true
+    outputs:
+      contact: ${{ steps.contact.outputs.value }}
+    steps:
+      - name: Set Output
+        id: contact
+        run: echo "::set-output name=value::${{ env.contact }}"
+
+      - name: Use Output
+        run: echo "The output value is ${{ steps.outputs.contact }}"
